@@ -1,0 +1,7 @@
+C:\Users\Sergei\Documents\GitKrakenProjects\Semestrovka\Semestrovka\Semestrovka\obj\Debug\Semestrovka.csprojAssemblyReference.cache
+C:\Users\Sergei\Documents\GitKrakenProjects\Semestrovka\Semestrovka\Semestrovka\obj\Debug\Semestrovka.csproj.CoreCompileInputs.cache
+C:\Users\Sergei\Documents\GitKrakenProjects\Semestrovka\Semestrovka\Semestrovka\bin\Debug\Semestrovka.exe.config
+C:\Users\Sergei\Documents\GitKrakenProjects\Semestrovka\Semestrovka\Semestrovka\bin\Debug\Semestrovka.exe
+C:\Users\Sergei\Documents\GitKrakenProjects\Semestrovka\Semestrovka\Semestrovka\bin\Debug\Semestrovka.pdb
+C:\Users\Sergei\Documents\GitKrakenProjects\Semestrovka\Semestrovka\Semestrovka\obj\Debug\Semestrovka.exe
+C:\Users\Sergei\Documents\GitKrakenProjects\Semestrovka\Semestrovka\Semestrovka\obj\Debug\Semestrovka.pdb
