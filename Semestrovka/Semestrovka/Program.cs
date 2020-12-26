@@ -76,7 +76,7 @@ namespace Semestrovka
             Console.WriteLine("Removing the node: " + timer.Elapsed + "\n");
             timer.Reset();
 
-            Console.Write("zaebalsya");
+            
             
             Console.ReadKey();
             
