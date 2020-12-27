@@ -10,20 +10,67 @@ namespace Semestrovka
 
     class Program
     {
-        public void GetMatrix(Graph graphName)
+        public static GraphNode[] ChangeStart(Graph graphName, GraphNode start, GraphNode[] queue)
         {
-            
+            if (!start.Equals(queue.First()))
+            {
+                GraphNode tmpNode = queue[0];
+                queue[0] = null;
+                for (int i = 0; i < queue.Length; i++)
+                {
+                    if (queue[i] == start)
+                    {
+                        queue[i] = tmpNode;
+                        queue[0] = start;
+                        i = queue.Length;
+                    }
+                }
+            }
+            return queue;
         }
-
-        public void FindHamiltonianCycle(Graph graphName)
+        public static void FindHamiltonianCycle(Graph graphName, string start)
         {
-            
-            
+            var nodeStart = graphName.FindNode(start);
+            int p = 0;
+            Random random = new Random();
+            GraphNode[] queue = new GraphNode[graphName.Nodes.Count];
+            List<GraphNode> CheckedNodes = new List<GraphNode>();
+            foreach (var nodes in graphName.Nodes)
+            {
+                queue[p] = nodes;
+                if (p == queue.Length) break;
+                p++;
+            }
+            queue = ChangeStart(graphName, nodeStart, queue);
+            int index;
+            GraphNode tmp;
+            int arrayIndex;
+            for (int i = 0; i < queue.Length - 1; i++)
+            {
+                while (!graphName.isCorridorExists(queue[i], queue[i + 1]))
+                {
+
+                    index = random.Next(0, graphName.GetConnectedNodes(queue[i]).Count);
+                    arrayIndex = Array.IndexOf(queue, graphName.GetConnectedNodes(queue[i])[index]);
+                    tmp = queue[i + 1];
+                    if (!CheckedNodes.Any(nodes => nodes == queue[arrayIndex]))
+                    {
+                        queue[i + 1] = queue[arrayIndex];
+                        queue[arrayIndex] = tmp;
+                    }
+                }
+                CheckedNodes.Add(queue[i]);
+            }
+            Console.WriteLine("\nHamiltonian Cycle:\n");
+            for (int i = 0; i < queue.Length; i++)
+            {
+                Console.WriteLine(" "+queue[i].Name);
+            }
         }
 
         static void Main(string[] args)
         {
-            var graph = new Graph(); // ab ac af bc bd df gd gh hk kq qf hr qr
+            var graph = new Graph(); // ab ac af cd dk bc bd gd gh gk kr qf hr qr
             Stopwatch timer = new Stopwatch();
             
             timer.Start();
@@ -51,15 +98,15 @@ namespace Semestrovka
 
             graph.AddCorridor("Зал ожидания", "Тронный зал"); // ac
             graph.AddCorridor("Зал ожидания", "Команата прислуги"); // af
-
+            graph.AddCorridor("Покои короля", "Библиотека"); // hk
             graph.AddCorridor("Кухня", "Тронный зал"); // bc
+            graph.AddCorridor("Тронный зал", "Картинный зал"); // cd
             graph.AddCorridor("Кухня", "Картинный зал"); // bd
-            graph.AddCorridor("Картинный зал", "Команата прислуги"); // df
             graph.AddCorridor("Охрана", "Картинный зал"); // gd
             graph.AddCorridor("Охрана", "Покои короля"); // gh 
-            graph.AddCorridor("Покои короля", "Библиотека"); // hk
-            graph.AddCorridor("Библиотека", "Обмундирование"); // kq 
-            graph.AddCorridor("Обмундирование", "Команата прислуги"); // qf 
+            
+            graph.AddCorridor("Команата прислуги", "Обмундирование"); // fq 
+            graph.AddCorridor("Библиотека", "Балкон"); // kr
             graph.AddCorridor("Покои короля", "Балкон"); // hr
             graph.AddCorridor("Обмундирование", "Балкон"); // qr
             graph.AddCorridor("Сад", "Балкон");
@@ -76,8 +123,12 @@ namespace Semestrovka
             Console.WriteLine("Removing the node: " + timer.Elapsed + "\n");
             timer.Reset();
 
-            
-            
+            Console.WriteLine("Checking corridor for Кухня and Балкон...");
+            if (graph.isCorridorExists("Кухня", "балкон")) Console.WriteLine("Corridor exists");
+            else Console.WriteLine("Corridor doesn't exists\n");
+
+            FindHamiltonianCycle(graph, "Зал ожидания");
+
             Console.ReadKey();
             
         }

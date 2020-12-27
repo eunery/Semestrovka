@@ -17,18 +17,41 @@ namespace Semestrovka
             Corridors = new List<GraphCorridor>();
             Nodes = new List<GraphNode>();
         }
-
         public GraphNode FindNode(string nodeName)
         {
             return Nodes.FirstOrDefault(node => node.Name == nodeName);
-            
         }
-        /*
-        public GraphCorridor FindCorridor(GraphNode nodeFirst, GraphNode nodeSecond)
+        
+        public bool isCorridorExists(GraphNode node1, GraphNode node2)
         {
-            
+            bool check = false;
+            foreach (var corridor in Corridors)
+            {
+                if (corridor.First == node1 && corridor.Second == node2 || corridor.Second == node1 && corridor.First == node2)
+                {
+                    check = true;
+                    break;
+                }
+            }
+            return check;
         }
-        */
+
+        public bool isCorridorExists(string node1, string node2)
+        {
+            var nodeFirst = FindNode(node1);
+            var nodeSecond = FindNode(node2);
+            bool check = false;
+            foreach (var corridor in Corridors)
+            {
+                if (corridor.First == nodeFirst && corridor.Second == nodeSecond)
+                {
+                    check = true;
+                    break;
+                }
+            }
+            return check;
+        }
+
         public List<GraphNode> GetConnectedNodes(GraphNode node)
         {
             return node.Corridor.Select(corridor => corridor.ConnectedNode).ToList();
@@ -76,8 +99,6 @@ namespace Semestrovka
             var node2 = FindNode(Second);
             if (node1 == null || node2 == null) return;
             RemoveCorridor(node1, node2);
-
-            //Corridors.Remove();
         }
 
         public void RemoveCorridor(GraphNode node1, GraphNode node2)
