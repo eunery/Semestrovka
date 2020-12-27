@@ -43,7 +43,7 @@ namespace Semestrovka
             bool check = false;
             foreach (var corridor in Corridors)
             {
-                if (corridor.First == nodeFirst && corridor.Second == nodeSecond)
+                if (corridor.First == nodeFirst && corridor.Second == nodeSecond || corridor.First == nodeSecond && corridor.Second == nodeFirst)
                 {
                     check = true;
                     break;
